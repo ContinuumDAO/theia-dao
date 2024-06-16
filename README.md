@@ -1,66 +1,30 @@
-## Foundry
+# Theia DAO: On-chain governance using Aragon OSx
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Notes
 
-Foundry consists of:
+### How does the DAO work?
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+A DAO has a **core contract** specific to that organisation. **Plugins** are accessed via an on-chain repository that can be connected to the DAO. The set of rules that govern the relationship between the DAO and the plugins are called **permissions**. There are some Aragon plugins available, and custom plugins can be built and added to the registry to allow them to be accessed by the DAO.
 
-## Documentation
+### The DAO Contract
 
-https://book.getfoundry.sh/
+The DAO contract holds funds, manages permissions, and holds metadata and the ENS name. There are six base functionalities:
 
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+1. Execution of arbitrary actions
+    - Execute on-chain decisions made by the DAO
+    - Send money as decided by the DAO
+2. Asset management
+    - Track balances
+    - Includes native, ERC20, ERC721, and more, as defined by plugins
+3. Upgradeability
+    - Can be upgraded in the future
+4. Callback handling
+    - Can include callback functions
+    - Includes onERC__Received
+5. Signature validation
+    - Can process transactions that were signed off chain
+    - Forwards them to a signature validator
+6. Permission management
+    - The previous five functionalities are only allowed by addresses as defined by this module.
+    - Usually the authorised address is only the DAO
+    - Can also include EOAs if desired
